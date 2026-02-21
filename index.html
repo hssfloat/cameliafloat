@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Holi — Festival of Colors</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --magenta: #e91e8c;
+    --saffron: #ff6b35;
+    --turmeric: #f9c22e;
+    --sky: #00b4d8;
+    --lime: #7fc232;
+    --violet: #7c3aed;
+    --deep: #1a0a2e;
+    --cream: #fdf6ec;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--deep);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 999;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(26,10,46,0.82);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  nav .logo {
+    font-family: 'Caveat', cursive;
+    font-size: 1.8rem;
+    background: linear-gradient(90deg, var(--saffron), var(--magenta), var(--sky));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none; font-size: 0.85rem; letter-spacing: 0.08em;
+    text-transform: uppercase; transition: color .2s;
+  }
+  nav ul a:hover { color: var(--turmeric); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    position: relative; overflow: hidden;
+    padding: 7rem 2rem 4rem;
+  }
+  #hero .bg-gradient {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 20% 30%, rgba(233,30,140,0.35) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 70%, rgba(124,58,237,0.35) 0%, transparent 55%),
+                radial-gradient(ellipse at 60% 10%, rgba(0,180,216,0.25) 0%, transparent 45%),
+                radial-gradient(ellipse at 40% 80%, rgba(255,107,53,0.25) 0%, transparent 45%);
+  }
+  .powder-burst {
+    position: absolute; border-radius: 50%;
+    filter: blur(40px); opacity: 0.6; animation: float 8s ease-in-out infinite;
+  }
+  .pb1 { width:300px;height:300px; background:var(--magenta); top:-80px; left:-60px; animation-delay:0s; }
+  .pb2 { width:250px;height:250px; background:var(--saffron); top:20%; right:-80px; animation-delay:2s; }
+  .pb3 { width:200px;height:200px; background:var(--sky); bottom:10%; left:10%; animation-delay:4s; }
+  .pb4 { width:180px;height:180px; background:var(--lime); bottom:-40px; right:20%; animation-delay:1s; }
+  .pb5 { width:150px;height:150px; background:var(--turmeric); top:50%; left:40%; animation-delay:3s; }
+  @keyframes float {
+    0%,100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.08); }
+  }
+
+  #hero .content { position: relative; z-index: 2; }
+  .hero-eyebrow {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem; color: var(--turmeric);
+    letter-spacing: 0.1em; margin-bottom: 1rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(4rem, 12vw, 9rem);
+    font-weight: 900; line-height: 0.9;
+    background: linear-gradient(135deg, var(--turmeric) 0%, var(--saffron) 30%, var(--magenta) 60%, var(--violet) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+  .hero-sub {
+    font-size: clamp(1rem,2.5vw,1.4rem);
+    color: rgba(255,255,255,0.75);
+    max-width: 560px; margin: 1.5rem auto 2.5rem;
+    font-weight: 300; line-height: 1.6;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-cta {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, var(--saffron), var(--magenta));
+    color: #fff; text-decoration: none;
+    font-weight: 500; border-radius: 50px;
+    letter-spacing: 0.05em; font-size: 1rem;
+    box-shadow: 0 0 40px rgba(233,30,140,0.4);
+    animation: fadeUp 0.8s 0.45s ease both;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .hero-cta:hover { transform: translateY(-3px); box-shadow: 0 0 60px rgba(233,30,140,0.6); }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(30px); }
+    to { opacity:1; transform: translateY(0); }
+  }
+
+  /* ── SECTIONS BASE ── */
+  section { padding: 6rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem; letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700; line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+  .section-body {
+    font-size: 1.08rem; line-height: 1.85;
+    color: rgba(255,255,255,0.75);
+    max-width: 680px;
+  }
+
+  /* ── HISTORY ── */
+  #history { background: var(--deep); }
+  #history .section-label { color: var(--turmeric); }
+  #history .section-title { color: var(--cream); }
+  #history .history-layout {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+    align-items: center; margin-top: 3rem;
+  }
+  #history .history-img {
+    border-radius: 20px; overflow: hidden;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+  #history .history-img img { width: 100%; display: block; }
+  .color-border { border: 4px solid transparent;
+    background-clip: padding-box;
+    box-shadow: 0 0 0 4px rgba(249,194,46,0.4), 0 30px 80px rgba(0,0,0,0.4);
+  }
+  .fact-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+  .pill {
+    padding: 0.4rem 1rem; border-radius: 50px;
+    font-size: 0.82rem; font-weight: 500; letter-spacing: 0.05em;
+  }
+  .pill-saffron { background: rgba(255,107,53,0.2); color: var(--saffron); border: 1px solid rgba(255,107,53,0.4); }
+  .pill-magenta { background: rgba(233,30,140,0.2); color: var(--magenta); border: 1px solid rgba(233,30,140,0.4); }
+  .pill-sky { background: rgba(0,180,216,0.2); color: var(--sky); border: 1px solid rgba(0,180,216,0.4); }
+  .pill-lime { background: rgba(127,194,50,0.2); color: var(--lime); border: 1px solid rgba(127,194,50,0.4); }
+
+  /* ── CELEBRATION / GALLERY ── */
+  #celebration { background: #0f0620; }
+  #celebration .section-label { color: var(--sky); }
+  #celebration .section-title { color: var(--cream); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 1rem; margin-top: 3rem;
+  }
+  .g-item {
+    border-radius: 16px; overflow: hidden;
+    position: relative; cursor: pointer;
+    transition: transform .3s, box-shadow .3s;
+  }
+  .g-item:hover { transform: scale(1.02); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .g-item.large { grid-column: span 2; grid-row: span 2; }
+  .g-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .g-item .overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(26,10,46,0.7) 0%, transparent 50%);
+    opacity: 0; transition: opacity .3s;
+    display: flex; align-items: flex-end; padding: 1.2rem;
+  }
+  .g-item:hover .overlay { opacity: 1; }
+  .overlay span { font-family: 'Caveat', cursive; font-size: 1.2rem; color: var(--turmeric); }
+
+  .celebration-copy { max-width: 780px; }
+  .vibes-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem; margin-top: 3rem;
+  }
+  .vibe-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 1.5rem;
+    transition: background .3s, border-color .3s;
+  }
+  .vibe-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.15); }
+  .vibe-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+  .vibe-card h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; margin-bottom: 0.5rem; }
+  .vibe-card p { font-size: 0.9rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+  /* ── LA SECTION ── */
+  #la { background: var(--deep); position: relative; overflow: hidden; }
+  #la::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 0% 50%, rgba(0,180,216,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 100% 50%, rgba(127,194,50,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  #la .section-label { color: var(--lime); }
+  #la .section-title { color: var(--cream); }
+  .la-events { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
+  .event-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 2rem;
+    position: relative; overflow: hidden;
+    transition: transform .3s;
+  }
+  .event-card:hover { transform: translateY(-4px); }
+  .event-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .ec-saffron::before { background: linear-gradient(90deg, var(--saffron), var(--turmeric)); }
+  .ec-magenta::before { background: linear-gradient(90deg, var(--magenta), var(--violet)); }
+  .ec-sky::before { background: linear-gradient(90deg, var(--sky), var(--lime)); }
+  .ec-lime::before { background: linear-gradient(90deg, var(--lime), var(--sky)); }
+  .event-card h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; margin-bottom: 0.4rem; }
+  .event-card .event-meta { font-size: 0.82rem; color: var(--turmeric); margin-bottom: 0.8rem; font-weight: 500; letter-spacing: 0.05em; }
+  .event-card p { font-size: 0.92rem; color: rgba(255,255,255,0.65); line-height: 1.65; }
+
+  /* ── TIMELAPSE ── */
+  #timelapse { background: #0a0118; }
+  #timelapse .section-label { color: var(--magenta); }
+  #timelapse .section-title { color: var(--cream); }
+  .video-wrapper {
+    margin-top: 3rem; position: relative;
+    border-radius: 24px; overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .video-placeholder {
+    background: linear-gradient(135deg, #1a0a2e 0%, #0f0620 50%, #1a0025 100%);
+    aspect-ratio: 16/9;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 3rem;
+    position: relative; overflow: hidden;
+  }
+  .video-placeholder::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 40%, rgba(233,30,140,0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(255,107,53,0.2) 0%, transparent 50%);
+  }
+  .play-btn {
+    width: 90px; height: 90px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--saffron), var(--magenta));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin-bottom: 1.5rem; cursor: pointer;
+    box-shadow: 0 0 50px rgba(233,30,140,0.5);
+    transition: transform .2s, box-shadow .2s;
+    position: relative; z-index: 2;
+  }
+  .play-btn:hover { transform: scale(1.1); box-shadow: 0 0 80px rgba(233,30,140,0.7); }
+  .video-placeholder h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; margin-bottom: 0.5rem;
+    position: relative; z-index: 2;
+  }
+  .video-placeholder p {
+    color: rgba(255,255,255,0.6); font-size: 0.95rem;
+    position: relative; z-index: 2;
+  }
+  .timelapse-note {
+    margin-top: 2rem; padding: 1.5rem 2rem;
+    background: rgba(249,194,46,0.08);
+    border: 1px solid rgba(249,194,46,0.2);
+    border-radius: 12px; font-size: 0.95rem;
+    color: rgba(255,255,255,0.7); line-height: 1.7;
+  }
+  .timelapse-note strong { color: var(--turmeric); }
+
+  .timelapse-photos {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0.8rem; margin-top: 2rem;
+  }
+  .timelapse-photos .tp {
+    border-radius: 12px; overflow: hidden; aspect-ratio: 4/3;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; color: rgba(255,255,255,0.15);
+    position: relative;
+  }
+  .tp-color { position: absolute; inset: 0; opacity: 0.15; }
+  .tp1 .tp-color { background: var(--magenta); }
+  .tp2 .tp-color { background: var(--saffron); }
+  .tp3 .tp-color { background: var(--sky); }
+  .tp4 .tp-color { background: var(--lime); }
+
+  /* ── SIGNUP ── */
+  #signup {
+    background: linear-gradient(135deg, #1a0a2e 0%, #0e0820 100%);
+    position: relative; overflow: hidden;
+  }
+  #signup::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(233,30,140,0.2) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 100%, rgba(0,180,216,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(127,194,50,0.15) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .signup-inner {
+    max-width: 580px; margin: 0 auto; text-align: center;
+    position: relative; z-index: 2;
+  }
+  #signup .section-label { color: var(--magenta); }
+  #signup .section-title { color: var(--cream); }
+  #signup .section-body { margin: 0 auto 2.5rem; font-size: 1.05rem; }
+  .signup-form {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px; padding: 2.5rem;
+    backdrop-filter: blur(10px);
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .form-group { display: flex; flex-direction: column; text-align: left; }
+  .form-group.full { grid-column: span 2; }
+  label { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem; }
+  input, select {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px; padding: 0.75rem 1rem;
+    color: #fff; font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; transition: border-color .2s, box-shadow .2s;
+    -webkit-appearance: none;
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--magenta);
+    box-shadow: 0 0 0 3px rgba(233,30,140,0.15);
+  }
+  input::placeholder { color: rgba(255,255,255,0.25); }
+  select option { background: #1a0a2e; }
+  .checkboxes { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.2rem; }
+  .check-item { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; }
+  .check-item input[type="checkbox"] {
+    width: 18px; height: 18px; padding: 0;
+    accent-color: var(--magenta); cursor: pointer;
+  }
+  .check-item span { font-size: 0.9rem; color: rgba(255,255,255,0.7); }
+  .submit-btn {
+    width: 100%; margin-top: 1.5rem;
+    padding: 1rem; border: none; cursor: pointer;
+    background: linear-gradient(135deg, var(--saffron), var(--magenta));
+    color: #fff; font-family: 'DM Sans', sans-serif;
+    font-size: 1rem; font-weight: 500; letter-spacing: 0.05em;
+    border-radius: 12px; transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 30px rgba(233,30,140,0.4);
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 50px rgba(233,30,140,0.6); }
+  .form-note { font-size: 0.78rem; color: rgba(255,255,255,0.35); margin-top: 1rem; }
+
+  /* ── SUCCESS MESSAGE ── */
+  .success-msg {
+    display: none; text-align: center; padding: 2rem;
+  }
+  .success-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .success-msg h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--turmeric); margin-bottom: 0.5rem; }
+  .success-msg p { color: rgba(255,255,255,0.7); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0a0118;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 2.5rem; text-align: center;
+  }
+  footer .logo { font-family: 'Caveat', cursive; font-size: 1.6rem;
+    background: linear-gradient(90deg, var(--saffron), var(--magenta), var(--sky));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem; }
+  footer p { font-size: 0.85rem; color: rgba(255,255,255,0.35); }
+
+  /* ── DIVIDERS ── */
+  .color-divider {
+    height: 3px;
+    background: linear-gradient(90deg, var(--magenta), var(--saffron), var(--turmeric), var(--lime), var(--sky), var(--violet), var(--magenta));
+    background-size: 200% 100%;
+    animation: shimmer 4s linear infinite;
+  }
+  @keyframes shimmer { 0% { background-position: 0% 0%; } 100% { background-position: 200% 0%; } }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    #history .history-layout { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .g-item.large { grid-column: span 2; }
+    .vibes-grid { grid-template-columns: 1fr; }
+    .la-events { grid-template-columns: 1fr; }
+    .timelapse-photos { grid-template-columns: 1fr 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .form-group.full { grid-column: span 1; }
+    nav ul { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">🎨 Holi LA</div>
+  <ul>
+    <li><a href="#history">History</a></li>
+    <li><a href="#celebration">Celebration</a></li>
+    <li><a href="#la">LA Events</a></li>
+    <li><a href="#timelapse">Camellia Parade</a></li>
+    <li><a href="#signup">Join Us</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="bg-gradient"></div>
+  <div class="powder-burst pb1"></div>
+  <div class="powder-burst pb2"></div>
+  <div class="powder-burst pb3"></div>
+  <div class="powder-burst pb4"></div>
+  <div class="powder-burst pb5"></div>
+  <div class="content">
+    <div class="hero-eyebrow">✦ Festival of Colors ✦</div>
+    <h1 class="hero-title">Happy<br>Holi!</h1>
+    <p class="hero-sub">Where ancient tradition meets joyful chaos — splash, dance, and celebrate the triumph of color, love, and spring with your Los Angeles community.</p>
+    <a href="#signup" class="hero-cta">Join the Celebration →</a>
+  </div>
+</section>
+
+<div class="color-divider"></div>
+
+<!-- HISTORY -->
+<section id="history">
+  <div class="container">
+    <div class="section-label">✦ Ancient Roots</div>
+    <h2 class="section-title">A Festival Born<br>from Legend & Love</h2>
+    <div class="history-layout">
+      <div>
+        <p class="section-body">Holi is one of the oldest and most beloved Hindu festivals, with roots stretching back thousands of years across the Indian subcontinent. Its origins weave together mythology, devotion, and the eternal cycle of seasons.</p>
+        <br>
+        <p class="section-body">The most celebrated legend tells of Prahlad, a young devotee of Lord Vishnu, and his evil aunt Holika — immune to fire — who tried to burn him alive. Through divine grace, Prahlad emerged unharmed while Holika perished. That bonfire, called <em>Holika Dahan</em>, is lit the night before Holi across India to this day, symbolizing the triumph of good over evil.</p>
+        <br>
+        <p class="section-body">Another beloved story comes from the playful young Krishna, who smeared colored powders on his beloved Radha and the gopis of Vrindavan — a tradition that evolved into the riotous, joyful color-throwing we know and love today. In Vrindavan and Mathura, Holi celebrations last a full week, drawing pilgrims from around the world.</p>
+        <br>
+        <p class="section-body">Holi also marks the arrival of spring, celebrating the end of winter's cold grip and the blossoming of life, love, and abundance. It's a time when social barriers dissolve — caste, class, and age all fade as everyone stands equal under a rainbow of color.</p>
+        <div class="fact-pills">
+          <span class="pill pill-saffron">🔥 3,000+ Years Old</span>
+          <span class="pill pill-magenta">🎨 Originally called Phagwah</span>
+          <span class="pill pill-sky">🌸 Marks arrival of Spring</span>
+          <span class="pill pill-lime">🌍 Celebrated in 100+ countries</span>
+        </div>
+      </div>
+      <div class="history-img color-border">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/A_Holi_celebration_%28Playing_with_colors%29.jpg/1280px-A_Holi_celebration_%28Playing_with_colors%29.jpg"
+             alt="Holi celebration with colorful powders"
+             onerror="this.style.background='linear-gradient(135deg,#e91e8c,#ff6b35,#f9c22e)';this.style.aspectRatio='1';this.alt='';">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="color-divider"></div>
+
+<!-- CELEBRATION -->
+<section id="celebration">
+  <div class="container">
+    <div class="section-label">✦ Pure Joy</div>
+    <h2 class="section-title">Why Holi is the Most<br>Fun Festival on Earth</h2>
+    <p class="section-body celebration-copy">There is simply nothing like Holi. For one glorious day, the whole world becomes a canvas and every person a living work of art. Here's why millions of people across every culture and background have fallen in love with this festival:</p>
+
+    <div class="gallery-grid" style="margin-top:2.5rem;">
+      <div class="g-item large">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Holi-Gezi.jpg/1280px-Holi-Gezi.jpg"
+             alt="Holi crowd in colors"
+             onerror="this.style.background='linear-gradient(135deg,#7c3aed,#e91e8c)';this.style.aspectRatio='16/9';">
+        <div class="overlay"><span>Dive into the color storm 🎆</span></div>
+      </div>
+      <div class="g-item">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Holi_India_%282%29.jpg/800px-Holi_India_%282%29.jpg"
+             alt="Person covered in colors"
+             onerror="this.style.background='linear-gradient(135deg,#ff6b35,#f9c22e)';this.style.aspectRatio='1';">
+        <div class="overlay"><span>Color on every face 🎨</span></div>
+      </div>
+      <div class="g-item">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/A_very_colorful_Holi_celebration.jpg/800px-A_very_colorful_Holi_celebration.jpg"
+             alt="Colorful Holi celebration"
+             onerror="this.style.background='linear-gradient(135deg,#00b4d8,#7fc232)';this.style.aspectRatio='1';">
+        <div class="overlay"><span>Pure, joyful chaos ✨</span></div>
+      </div>
+    </div>
+
+    <div class="vibes-grid" style="margin-top:3rem;">
+      <div class="vibe-card">
+        <div class="vibe-icon">🌈</div>
+        <h3>Colors Everywhere</h3>
+        <p>Powdered pigments in magenta, turmeric yellow, sky blue, and vibrant green fill the air — you throw it, wear it, breathe it. No one escapes!</p>
+      </div>
+      <div class="vibe-card">
+        <div class="vibe-icon">💃</div>
+        <h3>Music & Dance</h3>
+        <p>Dhol drumbeats echo through the streets. Bollywood bangers, folk songs, and bhangra rhythms keep the party alive from dawn to dusk.</p>
+      </div>
+      <div class="vibe-card">
+        <div class="vibe-icon">🍬</div>
+        <h3>Sweets & Thandai</h3>
+        <p>Gujiya (stuffed pastries), malpua, and the iconic rose-and-saffron thandai milk drink make every celebration a delicious feast for the senses.</p>
+      </div>
+      <div class="vibe-card">
+        <div class="vibe-icon">🤝</div>
+        <h3>No Barriers</h3>
+        <p>On Holi, everyone is equal. Strangers become friends, old grudges dissolve, and communities reunite under a shared explosion of color and laughter.</p>
+      </div>
+      <div class="vibe-card">
+        <div class="vibe-icon">💦</div>
+        <h3>Water Fights</h3>
+        <p>Pichkaris (water guns) and water balloons filled with colored water add a soaking-wet dimension to the powder chaos — especially delightful in LA heat!</p>
+      </div>
+      <div class="vibe-card">
+        <div class="vibe-icon">🌸</div>
+        <h3>Spring Renewal</h3>
+        <p>Holi is spring's own festival. After months of cold and grey, the explosion of color is nature herself celebrating — and inviting you to join in.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="color-divider"></div>
+
+<!-- LA -->
+<section id="la">
+  <div class="container">
+    <div class="section-label">✦ Southern California</div>
+    <h2 class="section-title">Holi Comes Alive<br>in Los Angeles</h2>
+    <p class="section-body">Los Angeles — home to one of the largest South Asian communities in North America — celebrates Holi with spectacular energy. From beachside color runs to temple celebrations in the San Gabriel Valley, the city offers some of the most vibrant Holi events outside of India.</p>
+
+    <div class="la-events">
+      <div class="event-card ec-saffron">
+        <div class="event-meta">📍 Artesia & Little India, Cerritos</div>
+        <h3>Little India Holi Mela</h3>
+        <p>The heart of LA's South Asian community erupts each March with street celebrations, authentic Indian food, live bhangra performances, and massive communal color throwing along Pioneer Blvd.</p>
+      </div>
+      <div class="event-card ec-magenta">
+        <div class="event-meta">📍 Dockweiler Beach / Venice</div>
+        <h3>Holi & the Beach</h3>
+        <p>A beloved annual gathering where thousands converge at the ocean for color powder festivities with the Pacific as backdrop — a uniquely Californian Holi experience that draws revelers from all over SoCal.</p>
+      </div>
+      <div class="event-card ec-sky">
+        <div class="event-meta">📍 ISKCON Temple, Culver City</div>
+        <h3>ISKCON Festival of Colors</h3>
+        <p>The Hare Krishna temple hosts a deeply spiritual yet joyful Holi, where kirtan (devotional music), free prasad (blessed food), and organic color powder create an unforgettable community celebration.</p>
+      </div>
+      <div class="event-card ec-lime">
+        <div class="event-meta">📍 San Gabriel Valley</div>
+        <h3>Community Block Parties</h3>
+        <p>Across Arcadia, Rowland Heights, Diamond Bar, and Temple City, neighborhood organizations and cultural associations host intimate block-level Holi parties that keep local traditions alive and accessible.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="color-divider"></div>
+
+<!-- TIMELAPSE -->
+<section id="timelapse">
+  <div class="container">
+    <div class="section-label">✦ Temple City 2026</div>
+    <h2 class="section-title">We Were There —<br>Camellia Parade Float</h2>
+    <p class="section-body">In 2026, our community made history by bringing the colors and spirit of Holi to the iconic Temple City Camellia Festival Parade — a float celebration unlike anything the parade had seen before.</p>
+
+    <div class="video-wrapper">
+      <div class="video-placeholder">
+        <div class="play-btn">▶</div>
+        <h3>Time-Lapse: Holi Float 2026</h3>
+        <p>Temple City Camellia Festival Parade • 2026<br>Coming soon — upload your video to replace this placeholder</p>
+      </div>
+    </div>
+
+    <div class="timelapse-note">
+      <strong>📹 How to add your video:</strong> Replace the placeholder above by embedding your YouTube, Vimeo, or direct video file. Simply swap the <code>&lt;div class="video-placeholder"&gt;</code> block with an <code>&lt;iframe&gt;</code> embed code from YouTube/Vimeo, or a <code>&lt;video&gt;</code> tag pointing to your MP4 file. The time-lapse from the 2026 Temple City Camellia Festival Parade will showcase our stunning Holi float in all its colorful glory!
+    </div>
+
+    <div class="timelapse-photos">
+      <div class="tp tp1"><div class="tp-color"></div>🎊</div>
+      <div class="tp tp2"><div class="tp-color"></div>🌸</div>
+      <div class="tp tp3"><div class="tp-color"></div>🎨</div>
+      <div class="tp tp4"><div class="tp-color"></div>🎉</div>
+    </div>
+    <p style="font-size:0.8rem;color:rgba(255,255,255,0.3);margin-top:0.8rem;text-align:center;">Float photo gallery — replace placeholder tiles with actual parade photos</p>
+
+    <div style="margin-top:3rem;">
+      <p class="section-body">Our Holi float in the 71st annual Temple City Camellia Festival Parade was a vibrant tribute to the Festival of Colors — adorned with thousands of marigolds, cascading ribbons of pink and saffron, dancers in traditional attire, and live dhol drumming. Community members of all backgrounds joined together to represent the beauty and inclusivity that defines Holi.</p>
+    </div>
+  </div>
+</section>
+
+<div class="color-divider"></div>
+
+<!-- SIGNUP -->
+<section id="signup">
+  <div class="container">
+    <div class="signup-inner">
+      <div class="section-label">✦ Stay Connected</div>
+      <h2 class="section-title">Join the Color<br>Revolution</h2>
+      <p class="section-body">Be the first to know about Holi events, cultural celebrations, and community gatherings across the LA area. Sign up and let's celebrate together!</p>
+
+      <div class="signup-form" style="padding:1rem;">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScWxEIUx0ZgMzID-yw1pA7uEoR-5VTNg2_4EyKU--vXe_nE9Q/viewform?embedded=true"
+          width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0"
+          style="border-radius:12px; display:block;">Loading…</iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">🎨 Holi LA</div>
+  <p style="margin-bottom:0.3rem;">Celebrating the Festival of Colors across Los Angeles</p>
+  <p>Made with 💛 and a lot of gulal powder</p>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('formContainer').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+}
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// Subtle scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.vibe-card, .event-card, .g-item').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
