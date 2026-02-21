@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Holi Float – Hindu Americans of San Gabriel Valley</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    width: 816px;
+    min-height: 1056px;
+    background: #fdf6ee;
+    font-family: 'Nunito', sans-serif;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Powder explosion background blobs */
+  .bg {
+    position: absolute; inset: 0; overflow: hidden; z-index: 0;
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.35;
+  }
+  .b1 { width: 420px; height: 420px; background: #f96f2e; top: -100px; left: -120px; }
+  .b2 { width: 350px; height: 350px; background: #ff3cac; top: 100px; right: -80px; }
+  .b3 { width: 300px; height: 300px; background: #f6c90e; bottom: 200px; left: -60px; }
+  .b4 { width: 380px; height: 380px; background: #5cf0b0; bottom: -100px; right: 50px; }
+  .b5 { width: 260px; height: 260px; background: #7f5af0; top: 380px; left: 200px; }
+
+  /* Decorative powder splats */
+  .splat {
+    position: absolute; border-radius: 50%; opacity: 0.18;
+  }
+  .s1 { width: 80px; height: 80px; background: #e63946; top: 50px; left: 350px; }
+  .s2 { width: 50px; height: 50px; background: #00b4d8; top: 230px; left: 620px; }
+  .s3 { width: 90px; height: 90px; background: #f6c90e; bottom: 350px; left: 30px; }
+  .s4 { width: 60px; height: 60px; background: #5cf0b0; bottom: 120px; left: 450px; }
+
+  /* Rangoli-inspired border */
+  .border-ring {
+    position: absolute; inset: 14px;
+    border: 3px solid transparent;
+    border-radius: 8px;
+    background: linear-gradient(#fdf6ee, #fdf6ee) padding-box,
+      conic-gradient(from 0deg, #f96f2e, #ff3cac, #f6c90e, #5cf0b0, #7f5af0, #f96f2e) border-box;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .border-ring-inner {
+    position: absolute; inset: 22px;
+    border: 1.5px dashed rgba(180,100,40,0.25);
+    border-radius: 6px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .content {
+    position: relative; z-index: 3;
+    padding: 52px 64px 44px;
+    display: flex; flex-direction: column; align-items: center;
+    min-height: 1056px;
+  }
+
+  /* OM symbol + org name */
+  .org-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 6px;
+  }
+  .om {
+    font-size: 28px;
+    background: linear-gradient(135deg, #f96f2e, #ff3cac);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+  .org-name {
+    font-size: 13px; font-weight: 800; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #6b3a1f;
+  }
+
+  /* Divider */
+  .divider {
+    width: 220px; height: 3px; margin: 10px 0 16px;
+    background: conic-gradient(from 0deg, #f96f2e, #ff3cac, #f6c90e, #5cf0b0, #7f5af0, #f96f2e);
+    border-radius: 2px;
+  }
+
+  /* Main headline */
+  .presents {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #b06030;
+    margin-bottom: 4px;
+  }
+  .headline {
+    font-family: 'Playfair Display', serif;
+    font-size: 74px; font-weight: 900; line-height: 0.95;
+    text-align: center;
+    background: linear-gradient(135deg, #f96f2e 0%, #ff3cac 35%, #7f5af0 65%, #f6c90e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+    margin-bottom: 4px;
+    letter-spacing: -1px;
+  }
+  .subtitle-holi {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 22px; color: #c04a20;
+    margin-bottom: 18px;
+  }
+
+  /* Powder burst illustration (CSS only) */
+  .burst {
+    width: 200px; height: 200px;
+    position: relative;
+    margin: 4px 0 10px;
+    flex-shrink: 0;
+  }
+  .burst-circle {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px; height: 120px;
+    background: radial-gradient(circle at 40% 40%, #f6c90e, #f96f2e 60%, #ff3cac);
+    border-radius: 50%;
+    box-shadow: 0 0 40px rgba(249,111,46,0.5), 0 0 0 12px rgba(249,111,46,0.12);
+  }
+  .petal {
+    position: absolute; top: 50%; left: 50%;
+    width: 18px; height: 52px;
+    border-radius: 50% 50% 0 0;
+    transform-origin: bottom center;
+  }
+  /* 12 petals */
+  .petal:nth-child(1)  { background:#f96f2e; transform: translate(-50%,-100%) rotate(0deg); }
+  .petal:nth-child(2)  { background:#ff3cac; transform: translate(-50%,-100%) rotate(30deg); }
+  .petal:nth-child(3)  { background:#f6c90e; transform: translate(-50%,-100%) rotate(60deg); }
+  .petal:nth-child(4)  { background:#5cf0b0; transform: translate(-50%,-100%) rotate(90deg); }
+  .petal:nth-child(5)  { background:#7f5af0; transform: translate(-50%,-100%) rotate(120deg); }
+  .petal:nth-child(6)  { background:#e63946; transform: translate(-50%,-100%) rotate(150deg); }
+  .petal:nth-child(7)  { background:#f96f2e; transform: translate(-50%,-100%) rotate(180deg); }
+  .petal:nth-child(8)  { background:#ff3cac; transform: translate(-50%,-100%) rotate(210deg); }
+  .petal:nth-child(9)  { background:#f6c90e; transform: translate(-50%,-100%) rotate(240deg); }
+  .petal:nth-child(10) { background:#5cf0b0; transform: translate(-50%,-100%) rotate(270deg); }
+  .petal:nth-child(11) { background:#7f5af0; transform: translate(-50%,-100%) rotate(300deg); }
+  .petal:nth-child(12) { background:#e63946; transform: translate(-50%,-100%) rotate(330deg); }
+
+  /* Tag line */
+  .tagline {
+    font-size: 16px; font-weight: 800; color: #4a1a6a;
+    text-align: center; letter-spacing: 0.04em;
+    margin-bottom: 22px;
+    max-width: 460px;
+  }
+  .tagline span {
+    background: linear-gradient(90deg,#f96f2e,#ff3cac,#7f5af0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Info cards row */
+  .info-row {
+    display: flex; gap: 14px; margin-bottom: 22px; width: 100%;
+    justify-content: center;
+  }
+  .info-card {
+    background: rgba(255,255,255,0.7);
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 12px 20px;
+    text-align: center;
+    flex: 1; max-width: 180px;
+    backdrop-filter: blur(4px);
+  }
+  .ic1 { border-color: #f96f2e; }
+  .ic2 { border-color: #ff3cac; }
+  .ic3 { border-color: #7f5af0; }
+  .info-icon { font-size: 22px; margin-bottom: 3px; }
+  .info-label {
+    font-size: 9px; font-weight: 800; letter-spacing: 0.15em;
+    text-transform: uppercase; color: #999; margin-bottom: 2px;
+  }
+  .info-value {
+    font-size: 13px; font-weight: 800; color: #2d1a0e;
+    line-height: 1.3;
+  }
+
+  /* QR + description row */
+  .bottom-row {
+    display: flex; gap: 28px; align-items: flex-start;
+    width: 100%; margin-bottom: 20px;
+  }
+  .qr-block {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 8px; flex-shrink: 0;
+  }
+  .qr-wrap {
+    padding: 10px;
+    background: white;
+    border-radius: 12px;
+    border: 3px solid #f6c90e;
+    box-shadow: 0 4px 20px rgba(249,111,46,0.2);
+  }
+  .qr-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #b06030;
+    text-align: center;
+  }
+  .description {
+    flex: 1;
+    background: rgba(255,255,255,0.65);
+    border-left: 4px solid #ff3cac;
+    border-radius: 0 10px 10px 0;
+    padding: 16px 18px;
+    backdrop-filter: blur(4px);
+  }
+  .desc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700; color: #6b1f5e;
+    margin-bottom: 8px;
+  }
+  .desc-body {
+    font-size: 12.5px; color: #4a2a0e; line-height: 1.65;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 2px dashed rgba(180,100,40,0.2);
+    width: 100%;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-org {
+    font-size: 11px; font-weight: 800; color: #6b3a1f;
+    letter-spacing: 0.08em;
+  }
+  .footer-social {
+    font-size: 11px; color: #b06030; font-weight: 600;
+  }
+  .hashtag {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px; font-style: italic; color: #ff3cac; font-weight: 700;
+  }
+
+  /* Powder dots scattered */
+  .dot {
+    position: absolute; border-radius: 50%; z-index: 1;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+  <div class="blob b4"></div>
+  <div class="blob b5"></div>
+  <div class="splat s1"></div>
+  <div class="splat s2"></div>
+  <div class="splat s3"></div>
+  <div class="splat s4"></div>
+</div>
+
+<div class="border-ring"></div>
+<div class="border-ring-inner"></div>
+
+<div class="content">
+
+  <div class="org-header">
+    <span class="om">ॐ</span>
+    <span class="org-name">Hindu Americans of San Gabriel Valley</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <p class="presents">Proudly Presents</p>
+  <h1 class="headline">HOLI</h1>
+  <p class="subtitle-holi">Festival of Colors Float</p>
+
+  <!-- Flower burst -->
+  <div class="burst">
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+    <div class="burst-circle"></div>
+  </div>
+
+  <p class="tagline">
+    <span>Celebrating Unity, Joy & the Triumph of Color</span><br>
+    Experience the vibrant spirit of Holi on parade!
+  </p>
+
+  <!-- Info cards -->
+  <div class="info-row">
+    <div class="info-card ic1">
+      <div class="info-icon">📅</div>
+      <div class="info-label">Date</div>
+      <div class="info-value">March 22, 2025</div>
+    </div>
+    <div class="info-card ic2">
+      <div class="info-icon">📍</div>
+      <div class="info-label">Location</div>
+      <div class="info-value">San Gabriel Valley Parade Route</div>
+    </div>
+    <div class="info-card ic3">
+      <div class="info-icon">🎉</div>
+      <div class="info-label">Float Theme</div>
+      <div class="info-value">Holi – Festival of Colors</div>
+    </div>
+  </div>
+
+  <!-- QR + Description -->
+  <div class="bottom-row">
+    <div class="qr-block">
+      <div class="qr-wrap">
+        <div id="qrcode"></div>
+      </div>
+      <div class="qr-label">Scan for Details &amp; RSVP</div>
+    </div>
+    <div class="description">
+      <div class="desc-title">About Our Float</div>
+      <div class="desc-body">
+        The Hindu Americans of San Gabriel Valley invite you to witness our breathtaking
+        <strong>Holi – Festival of Colors</strong> float as it rolls through the streets
+        in a burst of powder, petals, and pride.<br><br>
+        Our float celebrates Holi's ancient spirit — the arrival of spring, the victory of
+        good over evil, and the joyful bond that unites our community. Adorned with
+        marigolds, rangoli patterns, and flowing clouds of vibrant color, the float
+        honors the rich traditions of South Asian heritage while embracing our home
+        here in the San Gabriel Valley.<br><br>
+        Come join thousands of spectators and let the colors of Holi fill your heart!
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>
+      <div class="footer-org">Hindu Americans of San Gabriel Valley</div>
+      <div class="footer-social">www.hasgv.org &nbsp;|&nbsp; info@hasgv.org</div>
+    </div>
+    <div class="hashtag">#HoliFloat &nbsp; #HASGV &nbsp; #FestivalOfColors</div>
+  </div>
+
+</div>
+
+<script>
+  new QRCode(document.getElementById("qrcode"), {
+    text: "https://rebrand.ly/0h1es17",
+    width: 120,
+    height: 120,
+    colorDark: "#f5a623",
+    colorLight: "#c14a4a",
+    correctLevel: QRCode.CorrectLevel.H
+  });
+</script>
+</body>
+</html>
